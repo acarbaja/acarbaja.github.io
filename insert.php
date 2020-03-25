@@ -195,7 +195,16 @@ function sortWithAll($a,$b){
 
 //sort with money first then alphabetize
 function sortWithMoneyAndAlph($a,$b){
-  $diff = $a["price"] - $b["price"];
+  $aPrice = $a["price"];
+  $bPrice = $b["price"];
+  if(is_numeric($aPrice) and is_numeric($bPrice)){
+      $diff = $aPrice- $bPrice;
+  } elseif (is_numeric($aPrice)){
+    $diff= 1; //only a is a nmber
+  } else{
+    $diff = -1; //only b is a number
+  }
+
 
   $moneyRank = priceSort($a,$b);
   if ($diff == 0){
@@ -205,11 +214,7 @@ function sortWithMoneyAndAlph($a,$b){
 }
 
 function sortWithPriorityAndAlph($a,$b){
-  $prioritySort = expSort($a,$b);
-
-  if (isset($a["shadow"]) and isset($b["shadow"])){
-      $prioritySort = expSortWithMoney($a,$b);
-  }
+  $priorityRank = expSort($a,$b);
 
   if ($priorityRank == 0){
     return critterNameSort($a,$b);
