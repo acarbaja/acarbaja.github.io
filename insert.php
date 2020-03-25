@@ -234,17 +234,25 @@ function critterNameSort($a, $b)
 //sort by exp first, then money, then name
 function sortWithAll($a, $b)
 {
-    $expRank = expSort($a, $b);
 
-    if ($expRank == 0) {
-        $moneyRank = critterMoneySort($a, $b);
-        if ($moneyRank ==0) {
-            return critterNameSort($a, $b);
-        } else {
-            return $moneyRank;
-        }
+  $priorityRank = expSort($a, $b);
+
+  if ($priorityRank == 0) {
+    $aPrice = $a["price"];
+    $bPrice = $b["price"];
+    if (is_numeric($aPrice) and is_numeric($bPrice)) {
+        $diff = $bPrice - $aPrice;
+    } elseif (is_numeric($aPrice)) {
+        $diff= -1; //only a is a nmber
+    } else {
+        $diff = 1; //only b is a number
     }
-    return $expRank;
+    if ($diff == 0){
+      return critterNameSort($a, $b);
+    }
+      return $diff;
+  }
+  return $priorityRank;
 }
 
 //sort with money first then alphabetize
