@@ -69,20 +69,26 @@ foreach ($fishes as $name=>$fishInfo) {
                 $nextFishMonth = $fishInfo["season"][$i+1];
                 $indexOfNext = array_search($nextFishMonth, $acnlMonths);
 
-                if ($indexOfNext - $indexOfCurrent > 1) {
+                // print "indexofCurr: " . $indexOfCurrent . " and next: " . $indexOfNext;
+                if ($indexOfNext - $indexOfCurrent > 1 ) {
                   //if current month is later in the year than our starting month
-                  if($indexOfCurrent > $yearlyIndex){
+                  if($indexOfCurrent > $yearlyIndex or $indexOfCurrent == $yearlyIndex){
 
-                    $allInfo["exp"] = array_search($fishInfo["season"][$i], $acnlMonths) - $yearlyIndex;
-
+                    $allInfo["exp"] = $indexOfCurrent - $yearlyIndex;
+                    // print "REG JUMP months : " . $acnlMonths[$indexOfCurrent] . " and " . $acnlMonths[$indexOfNext]. " start from " . $acnlMonths[$yearlyIndex];
+                    // print " thing : " . $allInfo["exp"];
+                    //     print_r($allInfo["season"]);
                     break;
                   }
                   //if we aren't just going from december to january
                   if(!($indexOfCurrent == 11 && $indexOfNext==0)){
+
                     $countThroughDec = 11 -$yearlyIndex;
                     $countThroughDec += $indexOfCurrent +1; //count extra for 0 indexing
                     $allInfo["exp"] = $countThroughDec;
-
+                    // print "DEC JUMP months : " . $acnlMonths[$indexOfCurrent] . " and " . $acnlMonths[$indexOfNext]. " start from " . $acnlMonths[$yearlyIndex];
+                    // print " thing : " . $allInfo["exp"];
+                    //     print_r($allInfo["season"]);
                     break;
                   }
                 }
@@ -95,13 +101,17 @@ foreach ($fishes as $name=>$fishInfo) {
                         $countThroughDec = 11 - $yearlyIndex;
                         $countThroughDec += $indexOfNext + 1; //count extra for jan
                         $allInfo["exp"] = $countThroughDec;
-
+                        // print "LAST DEC months : " . $acnlMonths[$indexOfCurrent] . " and " . $acnlMonths[$indexOfNext]. " start from " . $acnlMonths[$yearlyIndex];
+                        // print " thing : " . $allInfo["exp"];
+                        //     print_r($allInfo["season"]);
                         break;
                     }
 
                     //otherwise, we do not pass through december
                     $allInfo["exp"] = $indexOfNext - $yearlyIndex;
-
+                    // print "LAST REG months : " . $acnlMonths[$indexOfCurrent] . " and " . $acnlMonths[$indexOfNext]. " start from " . $acnlMonths[$yearlyIndex];
+                    // print " thing : " . $allInfo["exp"];
+                    //     print_r($allInfo["season"]);
                     break;
                 }
 
@@ -149,11 +159,14 @@ foreach ($bugs as $name=>$bugInfo) {
 
 
                 if ($indexOfNext - $indexOfCurrent > 1) {
+                  // print "indexofnext: " . $indexOfNext . " and curr: ". $indexOfCurrent;
                   //if current month is later in the year than our starting month
-                  if($indexOfCurrent > $yearlyIndex){
+                  if($indexOfCurrent > $yearlyIndex or $indexOfCurrent == $yearlyIndex){
 
-                    $allInfo["exp"] = array_search($fishInfo["season"][$i], $acnlMonths) - $yearlyIndex;
-
+                    $allInfo["exp"] = $indexOfCurrent - $yearlyIndex;
+                    // print "REG JUMP months : " . $acnlMonths[$indexOfCurrent] . " and " . $acnlMonths[$yearlyIndex];
+                    // print " thing : " . $allInfo["exp"];
+                    // print_r($allInfo["season"]);
                     break;
                   }
                   //if we aren't just going from december to january
@@ -162,6 +175,9 @@ foreach ($bugs as $name=>$bugInfo) {
                     $countThroughDec += $indexOfCurrent +1; //count extra for 0 indexing
                     $allInfo["exp"] = $countThroughDec;
 
+                    // print "DEC JUMP months : " . $acnlMonths[$indexOfCurrent] . " and " . $acnlMonths[$indexOfNext]. " start from " . $acnlMonths[$yearlyIndex];
+                    // print " thing : " . $allInfo["exp"];
+                    //     print_r($allInfo["season"]);
                     break;
                   }
                 }
